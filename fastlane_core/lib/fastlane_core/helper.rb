@@ -61,7 +61,7 @@ module FastlaneCore
 
     # @return true if the currently running program is a unit test
     def self.test?
-      Object.const_defined?("SpecHelper")
+      Object.const_defined?(:SpecHelper)
     end
 
     # @return true if it is enabled to execute external commands
@@ -334,7 +334,7 @@ module FastlaneCore
     # Executes the provided block after adjusting the ENV to have the
     # provided keys and values set as defined in hash. After the block
     # completes, restores the ENV to its previous state.
-    def self.with_env_values(hash, &block)
+    def self.with_env_values(hash, &)
       old_vals = ENV.select { |k, v| hash.include?(k) }
       hash.each do |k, v|
         ENV[k] = hash[k]

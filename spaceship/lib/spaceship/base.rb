@@ -58,8 +58,8 @@ module Spaceship
         end
       end
 
-      def each(&block)
-        @hash.each(&block)
+      def each(&)
+        @hash.each(&)
       end
 
       def to_json(*a)
@@ -180,7 +180,7 @@ module Spaceship
       #
       #   ProvisioningProfile.some_other_method
       #   #=> NoMethodError: undefined method `some_other_method' for ProvisioningProfile
-      def method_missing(method_sym, *args, &block)
+      def method_missing(method_sym, *args, &)
         module_name = method_sym.to_s
         module_name.sub!(/^[a-z\d]/) { $&.upcase }
         module_name.gsub!(%r{(?:_|(/))([a-z\d])}) { $2.upcase }
@@ -227,7 +227,7 @@ module Spaceship
     # Do not override `initialize` in your own models.
     def initialize(attrs = {}, existing_client = nil)
       attrs.each do |key, val|
-        self.send("#{key}=", val) if respond_to?("#{key}=")
+        self.send(:"#{key}=", val) if respond_to?(:"#{key}=")
       end
       self.raw_data = DataHash.new(attrs)
       @client = existing_client || self.class.client
@@ -247,7 +247,7 @@ module Spaceship
     def self.attr_accessor(*vars)
       @attributes ||= []
       @attributes.concat(vars)
-      super(*vars)
+      super
     end
 
     def self.attributes
